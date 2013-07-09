@@ -1,0 +1,14 @@
+<h3>Create A New Category</h3>
+
+<%= render 'shared/errors', obj: @category %>
+
+<%= form_for @category do |f| %>
+  <%= f.label :name %>
+  <%= f.text_field :name %>
+  <br/>
+  <%= f.submit %>
+<% end %>
+
+<%= link_to "See All Categories", categories_path %>
+
+

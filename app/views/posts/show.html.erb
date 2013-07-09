@@ -1,0 +1,16 @@
+<h3><%= @post.title %></h3>
+<h5><%= @post.url %></h5>
+<p><%= @post.description %></p>
+<%= link_to "Edit", edit_post_path %> |
+<%= link_to "See all posts", root_path %>
+
+
+
+
+
+<h5>Comments:</h5>
+<ul>
+<% @post.comments.each do |comment| %>
+  <li><%= comment.body %></li>
+<% end %>
+</ul>
