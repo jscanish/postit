@@ -1,8 +1,10 @@
 
-<h3>Displaying All Posts:</h3>
-<ul>
+<h4>Displaying All Posts:</h4>
+<table class="table table-hover">
   <% @posts.each do |post| %>
-    <li><%= link_to post.title, post_path(post) %></li>
+    <tr>
+      <td class="lead"><%= link_to post.title, post_path(post) %></td>
+    </tr>
   <% end %>
-</ul>
+</table>
 

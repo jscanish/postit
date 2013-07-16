@@ -1,5 +1,7 @@
 class PostsController < ApplicationController
   before_action :set_post, only: [:show, :edit, :update]
+  before_action :require_user, only: [:edit, :new, :create, :update]
+  before_action :require_creator, only: [:edit, :update]
 
   def index
     @posts = Post.all(order: "created_at DESC")
@@ -15,9 +17,10 @@ class PostsController < ApplicationController
 
 
   def create
+    @user = current_user
     @post = Post.new(post_params)
-
     if @post.save
+      @user.posts << @post
       redirect_to root_path, notice: "Post was successfully created"
     else
       render :new
@@ -31,7 +34,7 @@ class PostsController < ApplicationController
   def update
     @post.update_attributes(post_params)
 
-    if @post.save
+    if @post.update(post_params)
       redirect_to post_path, notice: "Post successfully updated"
     else
       render :edit
@@ -46,7 +49,11 @@ private
   end
 
   def post_params
-    params.require(:post).permit!
+    params.require(:post).permit(:title, :description, :url)
+  end
+
+  def require_creator
+    access_denied unless logged_in? && current_user == @post.user
   end
 
 end

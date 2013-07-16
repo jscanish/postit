@@ -1,11 +1,23 @@
-<ul class="nav">
+<ul class="nav nav-pills">
   <li>
     <%= link_to "Postit!", root_path, :class => 'brand' %>
   </li>
-  <li>
-   <%= link_to 'New Post', new_post_path %>
-  </li>
-  <li>
-    <%= link_to 'New Category', new_category_path %>
-  </li>
+  <% if logged_in? %>
+    <li>
+     <%= link_to 'New Post', new_post_path %>
+    </li>
+    <li>
+      <%= link_to 'New Category', new_category_path %>
+    </li>
+    <li>
+      <%= link_to 'Logout', logout_path %>
+    </li>
+  <% else %>
+    <li>
+      <%= link_to 'Register', register_path %>
+    </li>
+    <li>
+      <%= link_to 'Log In', login_path %>
+    </li>
+  <% end %>
 </ul>

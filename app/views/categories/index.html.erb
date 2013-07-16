@@ -1,5 +1,5 @@
 <h3>Click category to see all related posts</h3>
- <ul>
+ <ul class="unstyled">
   <% @categories.each do |category| %>
     <li><%= link_to category.name, category_path(category) %></li>
   <% end %>
