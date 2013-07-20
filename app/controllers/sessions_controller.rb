@@ -14,6 +14,10 @@ class SessionsController < ApplicationController
     end
   end
 
+  def show
+    user = current_user
+  end
+
 
   def destroy
     session[:user_id] = nil

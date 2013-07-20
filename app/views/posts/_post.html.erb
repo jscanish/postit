@@ -1,0 +1,18 @@
+<div class='row'>
+  <div class='span0 well text-center'>
+  </div>
+  <div class='span8 well'>
+    <%= render post.categories %>
+    <h4><%= link_to post.title, post.url %></h4>
+    <p><%= post.description %></p>
+    <p>
+      <span class='quiet'>Posted by</span> <%= link_to post.user.username, user_path(post.user) %>
+      <small> at <%= post.created_at %></small>
+    </p>
+    <small>
+      <span>
+        <%= link_to("#{post.comments.size} comments", post_path(post)) %>
+      </span>
+    </small>
+  </div>
+</div>

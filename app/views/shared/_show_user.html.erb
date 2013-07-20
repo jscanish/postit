@@ -1,0 +1,22 @@
+<div class="well">
+  <h3><%= obj.username %>'s Activity</h3>
+  <hr/>
+
+  <span>
+    <h4><strong>Recent Posts:</strong></h4>
+      <ul class="unstyled">
+        <% obj.posts.reverse!.each do |post| %>
+          <li><h5><%= link_to post.title, post_path(post) %></h5></li>
+        <% end %>
+      </ul>
+  </span>
+
+  <span>
+    <h4><strong>Recent Comments:</strong></h4>
+      <ul class="unstyled">
+        <% obj.comments.reverse!.each do |comment| %>
+          <li><h5><%= link_to comment.body, post_path(comment.post) %></h5></li>
+        <% end %>
+      </ul>
+  </span>
+</div>

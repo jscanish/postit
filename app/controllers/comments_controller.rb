@@ -15,4 +15,10 @@ class CommentsController < ApplicationController
       redirect_to post_path(params[:post_id])
     end
   end
+
+  def vote
+    @comment = Comment.find(params[:id])
+    Vote.create(voteable: @comment, user: current_user, vote: params[:vote])
+    redirect_to :back, notice: "Vote Counted"
+  end
 end

@@ -1,10 +1,35 @@
 
-<h4>Displaying All Posts:</h4>
-<table class="table table-hover">
-  <% @posts.each do |post| %>
-    <tr>
-      <td class="lead"><%= link_to post.title, post_path(post) %></td>
-    </tr>
-  <% end %>
-</table>
+<h3>All Posts</h3>
+  <hr/>
 
+  <ul class='unstyled'>
+    <% @posts.each do |post| %>
+    <% if logged_in? %>
+      <div class='span0 well text-center'>
+        <%= link_to vote_post_path(post, vote: true), method: :post do %>
+          <i class="icon-arrow-up"></i>
+        <% end %>
+        <br/>
+          <%= "#{post.vote_total} votes" %>
+        <br/>
+        <%= link_to vote_post_path(post, vote: false), method: :post do %>
+          <i class="icon-arrow-down"></i>
+        <% end %>
+      </div>
+      <% end %>
+
+
+      <div class='span9 well'>
+        <li>
+          <% post.categories.each do |c| %>
+            <span class='badge'><%= c.name %></span>
+          <% end %>
+        </li>
+        <li><h4><%= link_to post.title, "http://#{post.url}" %></h4></li>
+        <li><%= truncate(post.description, length: 180, separator: " ") %></li>
+        <br/>
+        <li><small>Posted by <strong><%= link_to post.user.username, user_path(post.user) %> </strong><%= time_ago_in_words(post.created_at)%> ago</small></li>
+        <li><small><%= link_to "#{post.comments.count} comments", post_path(post) %></small></li>
+      </div>
+    <% end %>
+  </ul>

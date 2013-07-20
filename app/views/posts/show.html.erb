@@ -1,29 +1,84 @@
-
-
-<div class="lead"><h3><%= @post.title %></h3></div>
-<hr/>
-<h3><%= @post.url %></h3>
-<p class="lead"><%= @post.description %></p>
 <% if logged_in? %>
-  <small><%= link_to "Edit this post", edit_post_path %></small>
-<% end %>
-
-
-<div>
-  <%= form_for [@post, @comment] do |f| %>
-    <%= f.label :body, "New Comment" %>
-    <%= f.text_area :body %>
-    <br/>
-    <%= f.submit %>
+<div class='span0 well text-center' style='float: left'>
+  <%= link_to vote_post_path(@post, vote: true), method: :post  do %>
+    <i class="icon-arrow-up"></i>
   <% end %>
-<div>
-
-
-<h5>Comments:</h5>
-<%= render 'shared/errors', obj: @comment %>
-<ul class="unstyled">
-<% @post.comments.each do |comment| %>
-  <li><%= comment.body %></li>
+  <br/>
+  <%= "#{@post.vote_total} votes" %>
+  <br/>
+  <%= link_to vote_post_path(@post, vote: false), method: :post  do %>
+    <i class="icon-arrow-down"></i>
+  <% end %>
+</div>
 <% end %>
-</ul>
+
+<div class="span8 well" style="margin-right: 80px">
+      <h3><%= @post.title %></h3>
+    <h4><%= link_to @post.url, "http://#{@post.url}" %></h4>
+      <% @post.categories.each do |c| %>
+        <span class='badge'>
+          <%= c.name %>
+        </span>
+      <% end %>
+      <br/>
+      <small>Posted by <strong><%= link_to @post.user.username, user_path(@post.user) %></strong></small>
+    <hr/>
+    <p class="lead"><%= @post.description %></p>
+    <% if logged_in? && @post.user == current_user %>
+      <small><%= link_to "Edit this post", edit_post_path %></small>
+    <% end %>
+  <div>
+    <br/>
+    <%= form_for [@post, @comment] do |f| %>
+      <%= f.label :body, "New Comment" %>
+      <%= f.text_area :body %>
+      <br/>
+      <%= f.submit %>
+    <% end %>
+  </div>
+</div>
+
+
+
+
+
+
+
+  <% if logged_in? %>
+    <h4 style="text-align: center">Comments:</h4>
+  <% end %>
+
+  <%= render 'shared/errors', obj: @comment %>
+  <ul class="unstyled">
+    <% @post.comments.each do |comment| %>
+      <% if logged_in? %>
+        <div class='span0 well well-small text-center' style='float: left; margin-right: 21px'>
+          <%= link_to vote_post_comment_path(comment.post, comment, vote: true), method: :post  do %>
+            <i class="icon-arrow-up"></i>
+          <% end %>
+
+          <br/>
+          <%= "#{comment.vote_total} votes" %>
+          <br/>
+
+          <%= link_to vote_post_comment_path(comment.post, comment, vote: false), method: :post  do %>
+            <i class="icon-arrow-down"></i>
+          <% end %>
+        </div>
+      <% end %>
+
+
+      <div class="span8 well" style="margin-right: 100px">
+          <li>
+            <%= comment.body %>
+              <div class="quiet">
+                <small>
+                  <p>Posted by <%= link_to comment.user.username, user_path(comment.user) %></p>
+                </small>
+              </div>
+          </li>
+      </div>
+    <% end %>
+  </ul>
+
 
