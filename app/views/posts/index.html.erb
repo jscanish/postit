@@ -1,9 +1,15 @@
 
-<h3>All Posts</h3>
-  <hr/>
+<h3>
+  All Posts
+  <% unless logged_in? %>
+    <small> - You must be logged in to vote on posts </small>
+  <% end %>
+</h3>
+<hr/>
 
-  <ul class='unstyled'>
-    <% @posts.each do |post| %>
+<ul class='unstyled'>
+
+  <% @posts.each do |post| %>
     <% if logged_in? %>
       <div class='span0 well text-center'>
         <%= link_to vote_post_path(post, vote: true), method: :post do %>
@@ -16,20 +22,16 @@
           <i class="icon-arrow-down"></i>
         <% end %>
       </div>
-      <% end %>
-
-
-      <div class='span9 well'>
-        <li>
-          <% post.categories.each do |c| %>
-            <span class='badge'><%= c.name %></span>
-          <% end %>
-        </li>
-        <li><h4><%= link_to post.title, "http://#{post.url}" %></h4></li>
-        <li><%= truncate(post.description, length: 180, separator: " ") %></li>
-        <br/>
-        <li><small>Posted by <strong><%= link_to post.user.username, user_path(post.user) %> </strong><%= time_ago_in_words(post.created_at)%> ago</small></li>
-        <li><small><%= link_to "#{post.comments.count} comments", post_path(post) %></small></li>
-      </div>
     <% end %>
-  </ul>
+
+
+    <div class='span9 well'>
+      <%= render post.categories %>
+      <li><h4><%= link_to post.title, "http://#{post.url}" %></h4></li>
+      <li><%= truncate(post.description, length: 180, separator: " ") %></li>
+      <br/>
+      <li><small>Posted by <strong><%= link_to post.user.username, user_path(post.user) %> </strong><%= time_ago_in_words(post.created_at)%> ago</small></li>
+      <li><small><%= link_to "#{post.comments.count} comments", post_path(post) %></small></li>
+    </div>
+  <% end %>
+</ul>

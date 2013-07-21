@@ -7,7 +7,21 @@
      <%= link_to 'New Post', new_post_path %>
     </li>
     <li>
-      <%= link_to 'New Category', new_category_path %>
+      <div class="btn-group">
+        <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+          Categories
+          <span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu">
+          <%# Category.select("distinct name").map do |cat| %>
+            <li><%#= link_to cat.name, category_path(cat) %></li>
+          <% Category.all.each do |category| %>
+            <li><%= link_to category.name, category_path(category) %></li>
+          <% end %>
+            <li class='divider'></li>
+          <li><%= link_to "New Category", new_category_path %></li>
+        </ul>
+      </div>
     </li>
     <li>
       <%= link_to "#{current_user.username}\'s Profile", profile_path %>

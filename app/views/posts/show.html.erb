@@ -15,11 +15,9 @@
 <div class="span8 well" style="margin-right: 80px">
       <h3><%= @post.title %></h3>
     <h4><%= link_to @post.url, "http://#{@post.url}" %></h4>
-      <% @post.categories.each do |c| %>
-        <span class='badge'>
-          <%= c.name %>
-        </span>
-      <% end %>
+
+      <%= render @post.categories %>
+
       <br/>
       <small>Posted by <strong><%= link_to @post.user.username, user_path(@post.user) %></strong></small>
     <hr/>
