@@ -19,7 +19,7 @@ PostitTemplate::Application.routes.draw do
   end
 
   resources :users, only: [:create, :show]
-  resources :categories, only: [:index, :new, :create, :show]
+  resources :categories, only: [:new, :create, :show]
 end
 
 

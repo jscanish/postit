@@ -9,6 +9,7 @@
 
 <ul class='unstyled'>
 
+<%# Post Vote buttons %>
   <% @posts.each do |post| %>
     <% if logged_in? %>
       <div class='span0 well text-center'>
@@ -24,14 +25,17 @@
       </div>
     <% end %>
 
-
+<%# Post info %>
     <div class='span9 well'>
+
       <%= render post.categories %>
-      <li><h4><%= link_to post.title, "http://#{post.url}" %></h4></li>
+
+      <li><h4><%= link_to post.title, fix_url(post.url) %></h4></li>
       <li><%= truncate(post.description, length: 180, separator: " ") %></li>
       <br/>
-      <li><small>Posted by <strong><%= link_to post.user.username, user_path(post.user) %> </strong><%= time_ago_in_words(post.created_at)%> ago</small></li>
+      <li><small>Posted by <strong><%= link_to post.user.username, user_path(post.user) %> </strong><%= display_time(post.created_at)%> ago</small></li>
       <li><small><%= link_to "#{post.comments.count} comments", post_path(post) %></small></li>
     </div>
+
   <% end %>
 </ul>

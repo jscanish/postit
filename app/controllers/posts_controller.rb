@@ -4,7 +4,11 @@ class PostsController < ApplicationController
   before_action :require_creator, only: [:edit, :update]
 
   def index
-    @posts = Post.all(order: "created_at DESC")
+    a = []
+    Post.all.each do |post|
+      a << post
+    end
+    @posts = a.sort_by { |post| vote_total(post) }.reverse
   end
 
   def show
@@ -42,8 +46,13 @@ class PostsController < ApplicationController
   end
 
   def vote
-    Vote.create(voteable: @post, user: current_user, vote: params[:vote])
-    redirect_to :back, notice: "Vote Counted"
+    if current_user.already_voted(@post)
+      flash[:error] = "You can only vote on a post once!"
+      redirect_to :back
+    else
+      Vote.create(voteable: @post, user: current_user, vote: params[:vote])
+      redirect_to :back, notice: "Vote Counted"
+    end
   end
 
 
@@ -54,11 +63,14 @@ private
   end
 
   def post_params
-    params.require(:post).permit(:title, :description, :url)
+    params.require(:post).permit(:title, :description, :url, { :category_ids => [] })
   end
 
   def require_creator
     access_denied unless logged_in? && current_user == @post.user
   end
 
+  def vote_total(obj)
+    obj.votes.where(vote: true).size - obj.votes.where(vote: false).size
+  end
 end

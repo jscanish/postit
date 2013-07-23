@@ -7,4 +7,8 @@ class User < ActiveRecord::Base
   validates :username, presence: true, uniqueness: true, length: {minimum: 4}
 
   has_secure_password validations: false
+
+  def already_voted(obj)
+    self.votes.where(voteable: obj).size > 0
+  end
 end

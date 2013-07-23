@@ -1,3 +1,5 @@
+
+<%# Post Vote Buttons %>
 <% if logged_in? %>
 <div class='span0 well text-center' style='float: left'>
   <%= link_to vote_post_path(@post, vote: true), method: :post  do %>
@@ -12,19 +14,21 @@
 </div>
 <% end %>
 
+<%# Post Information %>
 <div class="span8 well" style="margin-right: 80px">
       <h3><%= @post.title %></h3>
-    <h4><%= link_to @post.url, "http://#{@post.url}" %></h4>
+    <h4><%= link_to @post.url, fix_url(@post.url) %></h4>
 
       <%= render @post.categories %>
 
       <br/>
       <small>Posted by <strong><%= link_to @post.user.username, user_path(@post.user) %></strong></small>
     <hr/>
-    <p class="lead"><%= @post.description %></p>
+    <p><%= @post.description %></p>
     <% if logged_in? && @post.user == current_user %>
       <small><%= link_to "Edit this post", edit_post_path %></small>
     <% end %>
+    <hr/>
   <div>
     <br/>
     <%= form_for [@post, @comment] do |f| %>
@@ -46,6 +50,7 @@
     <h4 style="text-align: center">Comments:</h4>
   <% end %>
 
+<%# Comment vote buttons %>
   <%= render 'shared/errors', obj: @comment %>
   <ul class="unstyled">
     <% @post.comments.each do |comment| %>
@@ -65,13 +70,13 @@
         </div>
       <% end %>
 
-
+<%# Comment info %>
       <div class="span8 well" style="margin-right: 100px">
           <li>
             <%= comment.body %>
               <div class="quiet">
                 <small>
-                  <p>Posted by <%= link_to comment.user.username, user_path(comment.user) %></p>
+                  <p>Posted by <%= link_to comment.user.username, user_path(comment.user) %> <%= display_time(comment.created_at) %> ago</p>
                 </small>
               </div>
           </li>
