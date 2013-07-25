@@ -13,6 +13,7 @@ gem 'jquery-rails'
 gem 'turbolinks'
 gem 'jbuilder', '~> 1.2'
 gem 'bcrypt-ruby', '= 3.0.1'
+gem 'will_paginate', '~>3.0.4'
 
 group :doc do
   gem 'sdoc', require: false
