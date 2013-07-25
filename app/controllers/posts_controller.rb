@@ -46,20 +46,25 @@ class PostsController < ApplicationController
   end
 
   def vote
-    if current_user.already_voted(@post)
-      flash[:error] = "You can only vote on a post once!"
-      redirect_to :back
-    else
-      Vote.create(voteable: @post, user: current_user, vote: params[:vote])
-      redirect_to :back, notice: "Vote Counted"
+    respond_to do |format|
+
+      format.js do
+        if current_user.already_voted(@post)
+          render js: "alert('You can only vote on a post once!')"
+        else
+          Vote.create(voteable: @post, user: current_user, vote: params[:vote])
+          format.js
+        end
+      end
     end
   end
+
 
 
 private
 
   def set_post
-    @post = Post.find(params[:id])
+    @post = Post.find_by slug: (params[:id])
   end
 
   def post_params

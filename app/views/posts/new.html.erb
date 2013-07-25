@@ -1,7 +1,9 @@
-<%= render 'shared/header', header: "Create a new post" %>
+<div class="well">
+  <%= render 'shared/header', header: "Create a new post" %>
 
-<%= render 'shared/errors', obj: @post %>
+  <%= render 'shared/errors', obj: @post %>
 
-<%= render "shared/form" %>
+  <%= render "shared/form" %>
 
-<%= link_to "See All Posts", root_path %>
+  <%= link_to "See All Posts", root_path %>
+</div>

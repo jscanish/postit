@@ -2,13 +2,15 @@
 <%# Post Vote Buttons %>
 <% if logged_in? %>
 <div class='span0 well text-center' style='float: left'>
-  <%= link_to vote_post_path(@post, vote: true), method: :post  do %>
+  <%= link_to vote_post_path(@post, vote: true), method: :post, remote: true  do %>
     <i class="icon-arrow-up"></i>
   <% end %>
   <br/>
-  <%= "#{@post.vote_total} votes" %>
+  <span class="post_<%= @post.to_param %>_votes">
+    <%= "#{@post.vote_total} votes" %>
+  </span>
   <br/>
-  <%= link_to vote_post_path(@post, vote: false), method: :post  do %>
+  <%= link_to vote_post_path(@post, vote: false), method: :post, remote: true  do %>
     <i class="icon-arrow-down"></i>
   <% end %>
 </div>
@@ -56,15 +58,17 @@
     <% @post.comments.each do |comment| %>
       <% if logged_in? %>
         <div class='span0 well well-small text-center' style='float: left; margin-right: 21px'>
-          <%= link_to vote_post_comment_path(comment.post, comment, vote: true), method: :post  do %>
+          <%= link_to vote_post_comment_path(comment.post, comment, vote: true), method: :post, remote: true  do %>
             <i class="icon-arrow-up"></i>
           <% end %>
 
           <br/>
-          <%= "#{comment.vote_total} votes" %>
+          <span id="comment_<%= comment.id %>_votes">
+            <%= "#{comment.vote_total} votes" %>
+          </span>
           <br/>
 
-          <%= link_to vote_post_comment_path(comment.post, comment, vote: false), method: :post  do %>
+          <%= link_to vote_post_comment_path(comment.post, comment, vote: false), method: :post, remote: true  do %>
             <i class="icon-arrow-down"></i>
           <% end %>
         </div>

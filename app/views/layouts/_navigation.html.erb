@@ -1,4 +1,4 @@
-<ul class="nav nav-pills">
+<ul id = 'nav_bar' class="nav nav-pills">
   <li>
     <%= link_to "Postit!", root_path, :class => 'brand' %>
   </li>
@@ -13,13 +13,15 @@
           <span class="caret"></span>
         </a>
         <ul class="dropdown-menu">
-          <%# Category.select("distinct name").map do |cat| %>
-            <li><%#= link_to cat.name, category_path(cat) %></li>
           <% Category.all.each do |category| %>
             <li><%= link_to category.name, category_path(category) %></li>
           <% end %>
+          <% if logged_in? && current_user.admin? %>
             <li class='divider'></li>
-          <li><%= link_to "New Category", new_category_path %></li>
+            <li>
+              <%= link_to "New Category", new_category_path %>
+            </li>
+          <% end %>
         </ul>
       </div>
     </li>

@@ -1,10 +1,6 @@
 class CategoriesController < ApplicationController
   before_action :require_user, only: [:new, :create,]
-
-  def index
-    @categories = Category.all(order: "created_at DESC")
-  end
-
+  before_action :require_admin, except: [:show]
 
   def new
     @category = Category.new
@@ -22,7 +18,7 @@ class CategoriesController < ApplicationController
 
 
   def show
-    @category = Category.find(params[:id])
+    @category = Category.find_by slug: (params[:id])
   end
 
 

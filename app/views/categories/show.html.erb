@@ -1,9 +1,11 @@
-<h3>All <%= @category.name %> Posts</h3>
+<div class='well'>
+  <%= render 'shared/header', header: "All #{@category.name} Posts" %>
+  <h5>
+    <ul>
+      <% @category.postcategories.each do |c|%>
+        <li><%= link_to c.post.title, post_path(c.post) %></li>
+      <% end %>
+    </ul>
+  </h5>
+</div>
 
-<h5>
-  <ul>
-    <% @category.postcategories.each do |c|%>
-      <li><%= link_to c.post.title, post_path(c.post) %></li>
-    <% end %>
-  </ul>
-</h5>

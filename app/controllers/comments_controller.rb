@@ -3,7 +3,7 @@ class CommentsController < ApplicationController
 
    def create
     @user = current_user
-    @post = Post.find(params[:post_id])
+    @post = Post.find_by slug: (params[:post_id])
     @comment = @post.comments.new(params[:comment].permit!)
     @comment.post = @post
 
@@ -18,12 +18,16 @@ class CommentsController < ApplicationController
 
   def vote
     @comment = Comment.find(params[:id])
-    if current_user.already_voted(@comment)
-      flash[:error] = "You can only vote on a comment once!"
-      redirect_to :back
-    else
-      Vote.create(voteable: @comment, user: current_user, vote: params[:vote])
-      redirect_to :back, notice: "Vote Counted"
+
+    respond_to do |format|
+      format.js do
+        if current_user.already_voted(@comment)
+          render js: "alert('You can only vote on a comment once!')"
+        else
+          Vote.create(voteable: @comment, user: current_user, vote: params[:vote])
+          format.js
+        end
+      end
     end
   end
 end
