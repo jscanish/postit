@@ -1,11 +1,15 @@
 <%= render 'shared/header', header: "All #{@category.name} Posts" %>
-<div class='well'>
-  <h5>
-    <ul class="unstyled">
-      <% @category.postcategories.each do |c|%>
-        <li><%= link_to c.post.title, post_path(c.post) %></li>
-      <% end %>
-    </ul>
-  </h5>
-</div>
 
+
+<% @category.postcategories.reverse.each do |c|%>
+  <div class='span9 well'>
+    <ul class='unstyled'>
+      <%= render c.post.categories %>
+      <li><h4><%= link_to c.post.title, fix_url(c.post.url), class: 'urls' %></h4></li>
+      <li><%= truncate(c.post.description, length: 180, separator: " ") %></li>
+      <br/>
+      <li><small>Posted by <strong><%= link_to c.post.user.username, user_path(c.post.user), class: "names" %> </strong><%= display_time(c.post.created_at)%> ago</small></li>
+      <li><small><%= link_to "#{c.post.comments.count} comments", post_path(c.post), class: "urls" %></small></li>
+    </ul>
+  </div>
+<% end %>

@@ -14,7 +14,7 @@
       <%= f.collection_check_boxes :category_ids, Category.all, :id, :name do |cb|%>
         <% cb.label(class: "checkbox inline") {cb.check_box(class: "checkbox") + cb.text} %>
       <% end %>
-    </div>
+  </div>
   <%= f.submit %>
 <% end %>
 </div>

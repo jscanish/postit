@@ -32,11 +32,11 @@
 
       <%= render post.categories %>
 
-      <li><h4><%= link_to post.title, fix_url(post.url) %></h4></li>
+      <li><h4><%= link_to post.title, fix_url(post.url), class: "urls" %></h4></li>
       <li><%= truncate(post.description, length: 180, separator: " ") %></li>
       <br/>
-      <li><small>Posted by <strong><%= link_to post.user.username, user_path(post.user) %> </strong><%= display_time(post.created_at)%> ago</small></li>
-      <li><small><%= link_to "#{post.comments.count} comments", post_path(post) %></small></li>
+      <li><small>Posted by <strong><%= link_to post.user.username, user_path(post.user), class: "names" %> </strong><%= display_time(post.created_at)%> ago</small></li>
+      <li><small><%= link_to "#{post.comments.count} comments", post_path(post), class: "urls" %></small></li>
     </div>
 
   <% end %>

@@ -12,14 +12,23 @@
  *= require_tree .
  */
 
+body {
+  background: url("/images/post-it-note.jpg") no-repeat right top fixed;
+}
+
  @import "bootstrap";
 
  .container {
-  margin-left: 135px
+  margin-left: 135px;
 }
 
 .navbar .nav > li > a.brand {
   padding-left: 0px;
+  color: yellow;
+}
+
+.navbar .nav > li > a.brand:hover {
+  color: white;
 }
 
 .quiet {
@@ -31,10 +40,36 @@ div.nav_item {
   float: left;
 }
 
+.link-btn {
+  color: white !important;
+}
+
+a.link-btn:hover {
+  color: yellow !important;
+}
+
+.push_right {
+  margin-left: 580px;
+  color: white !important;
+}
+
+a.push_right:hover {
+  color: yellow !important;
+}
+
+.urls {
+  color: #0066cc;
+}
+
+.names {
+  color: #0066cc;
+}
+
 .label  {
   a, a:hover, a:focus {
     color: #fff;
     text-decoration: none;
+    color: yellow;
   }
 }
 

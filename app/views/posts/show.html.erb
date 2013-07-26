@@ -19,12 +19,12 @@
 <%# Post Information %>
 <div class="span8 well" style="margin-right: 80px">
       <h3><%= @post.title %></h3>
-    <h4><%= link_to @post.url, fix_url(@post.url) %></h4>
+    <h4><%= link_to @post.url, fix_url(@post.url), class: "urls" %></h4>
 
       <%= render @post.categories %>
 
       <br/>
-      <small>Posted by <strong><%= link_to @post.user.username, user_path(@post.user) %></strong></small>
+      <small>Posted by <strong><%= link_to @post.user.username, user_path(@post.user), class: "names" %></strong></small>
     <hr/>
     <p><%= @post.description %></p>
     <% if logged_in? && @post.user == current_user %>
@@ -80,7 +80,7 @@
             <%= comment.body %>
               <div class="quiet">
                 <small>
-                  <p>Posted by <%= link_to comment.user.username, user_path(comment.user) %> <%= display_time(comment.created_at) %> ago</p>
+                  <p>Posted by <%= link_to comment.user.username, user_path(comment.user), class: "names" %> <%= display_time(comment.created_at) %> ago</p>
                 </small>
               </div>
           </li>
