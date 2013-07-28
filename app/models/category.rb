@@ -1,5 +1,5 @@
 class Category < ActiveRecord::Base
-  include Sluggable
+  include SluggifyThisJs
   has_many :postcategories
   has_many :posts, through: :postcategories
 
