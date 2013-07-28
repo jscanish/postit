@@ -6,6 +6,7 @@
     <li>
      <%= link_to 'New Post', new_post_path, :class => 'link-btn' %>
     </li>
+  <% end %>
     <li>
       <div class="btn-group">
         <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
@@ -25,6 +26,7 @@
         </ul>
       </div>
     </li>
+  <% if logged_in? %>
     <li>
       <%= link_to "#{current_user.username}\'s Profile", profile_path, class: "push_right"  %>
     </li>
