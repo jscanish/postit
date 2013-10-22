@@ -4,15 +4,9 @@ class PostsController < ApplicationController
   before_action :require_creator, only: [:edit, :update]
 
   def index
-    #Order posts by votes
-      # a = []
-      # Post.all.each do |post|
-      #   a << post
-      # end
-      # @posts = a.sort_by { |post| vote_total(post) }.reverse
-
-    #Order posts by created_at
-      @posts = Post.paginate(page: params[:page], per_page: 10, order: "created_at DESC")
+    newest = Post.all.select { |post| Time.now - post.created_at < 7200 }
+    other_posts = Post.all.reject { |post| Time.now - post.created_at < 7200 }
+    @posts = newest + other_posts.sort_by { |post| vote_total(post) }.reverse
   end
 
   def show

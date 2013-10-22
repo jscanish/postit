@@ -2,7 +2,7 @@ class Post < ActiveRecord::Base
   include Voteable
   include SluggifyThisJs
   belongs_to :user
-  has_many :comments, :order => 'created_at DESC'
+  has_many :comments, order: 'created_at DESC'
   has_many :postcategories
   has_many :categories, through: :postcategories
   has_many :votes, as: :voteable
